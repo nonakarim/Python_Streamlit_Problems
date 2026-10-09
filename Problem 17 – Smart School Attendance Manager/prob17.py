@@ -31,5 +31,44 @@ class StudentDirectory:
 
     #Search Student Still Under Progress
 
+class SearchHistoryTracker:
+    def attendance_history(self, id):
+        for student in students:
+            if student.get("ID") == id:
+                st.table(student)
 
+    def today_attendance(self):
+        today = datetime.date.today()
+
+        absent=[]
+        present=[]
+
+        for student in students:
+            if student.get("Date") == today:
+                if student.get("Status") == "Absent":
+                    absent.append(student)
+                else:
+                    present.append(student)
+
+        isAbsent=True
+        isPresent = True
+
+        if absent != []:
+            st.subheader("Absent Students")
+            st.table(absent)
+        else:
+            isAbsent = False
+
+        if present != []:
+            st.subheader("Present Students")
+            st.table(present)
+        else:
+            isPresent = False
+
+        if not isAbsent and isPresent:
+            st.info("No absence has been recorded today.")
+        elif not isPresent and isAbsent:
+            st.info("No attendance has been recorded today.")
+        elif not isPresent and not isAbsent:
+            st.info("No Student Records Today YET")
 
