@@ -25,3 +25,11 @@ class StudentDetails:
                 self.status = status
                 student.get("Status") = self.status
 
+class StudentDirectory:
+    def view_students(self):
+        st.table(students)
+
+    #Search Student Still Under Progress
+
+
+
