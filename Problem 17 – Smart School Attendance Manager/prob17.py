@@ -54,13 +54,13 @@ class SearchHistoryTracker:
         isPresent = True
 
         if absent != []:
-            st.subheader("Absent Students")
+            st.subheader("🔴Absent Students")
             st.table(absent)
         else:
             isAbsent = False
 
         if present != []:
-            st.subheader("Present Students")
+            st.subheader("🟢Present Students")
             st.table(present)
         else:
             isPresent = False
@@ -72,3 +72,29 @@ class SearchHistoryTracker:
         elif not isPresent and not isAbsent:
             st.info("No Student Records Today YET")
 
+class OverallStatistics:
+    def total_students(self):
+        total_students = set()
+
+        for student in students:
+            total_students.add(student.get("Name"))
+
+        st.write(f"👩🏻‍🎓Total Students: {len(total_students)}")
+
+    def total_attendance_records(self):
+        st.write(f"📋Total Attendance Records {len(students)}")
+
+    def absent_present(self):
+        absent=[]
+        present=[]
+
+        for student in students:
+            if student.get("Status") == "Absent":
+                absent.append(student)
+            else:
+                present.append(student)
+
+        st.write(f"🟢Total Present Students {len(present)}")
+        st.write(f"🔴Total Absent Students {len(absent)}")
+
+        st.write(f"📈Total Attendance Percentage: {len(present)/len(students)*100}%")
