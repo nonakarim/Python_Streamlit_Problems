@@ -98,3 +98,30 @@ class OverallStatistics:
         st.write(f"🔴Total Absent Students {len(absent)}")
 
         st.write(f"📈Total Attendance Percentage: {len(present)/len(students)*100}%")
+
+class StudentStatistics:
+    def total_attendance_records(self, name):
+        total = 0
+        for student in students:
+            if student.get("Name") == name:
+                total += 1
+        st.write(f"📋Total Attendance Records {total}")
+
+    def absent_present(self, name):
+        absent=[]
+        present=[]
+
+        for student in students:
+            if student.get("Name") == name:
+                if student.get("Status") == "Absent":
+                    absent.append(student)
+                else:
+                    present.append(student)
+
+        st.write(f"🟢Total Present Records {len(present)}")
+        st.write(f"🔴Total Absent Records {len(absent)}")
+
+        st.write(f"📈Total Attendance Percentage: {len(present)/(len(present) + len(absent))*100}%")
+
+    
+        
