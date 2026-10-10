@@ -10,7 +10,7 @@ class StudentDetails:
         self.date = date
         self.cls = cls
         self.status = status
-
+        
         students.append({
             "ID": self.id,
             "Name": self.name, 
@@ -123,5 +123,37 @@ class StudentStatistics:
 
         st.write(f"📈Total Attendance Percentage: {len(present)/(len(present) + len(absent))*100}%")
 
-    
+class ClassStatistics:
+    def total_students(self, cls):
+        total_students = set()
+
+        for student in students:
+            if student.get("Class") == cls:
+                total_students.add(student.get("Name"))
+
+        st.write(f"👩🏻‍🎓Total Students: {len(total_students)}")
+
+    def total_attendance_records(self, cls):
+        total=0
+        for student in students:
+            if student.get("Class") == cls:
+                total += 1
+
+        st.write(f"📋Total Attendance Records {total}")
+
+    def absent_present(self, cls):
+        absent=[]
+        present=[]
+
+        for student in students:
+            if student.get("Class") == cls:
+                if student.get("Status") == "Absent":
+                    absent.append(student)
+                else:
+                    present.append(student)
+
+        st.write(f"🟢Total Present Students {len(present)}")
+        st.write(f"🔴Total Absent Students {len(absent)}")
+
+        st.write(f"📈Total Attendance Percentage: {len(present)/len(students)*100}%")   
         
