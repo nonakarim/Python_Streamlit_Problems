@@ -5,6 +5,13 @@ if "students" not in st.session_state:
     st.session_state.students = []
 
 class StudentDetails:
+    def register_student(self, id, name, cls):
+        st.session_state.students.append({
+            "ID": id,
+            "Name": name,
+            "Class": cls
+        })
+
     def record_attendance(self, id, name, date, cls, status):
         self.id = id
         self.name = name
@@ -12,13 +19,10 @@ class StudentDetails:
         self.cls = cls
         self.status = status
 
-        st.session_state.students.append({
-            "ID": self.id,
-            "Name": self.name, 
-            "Date": self.date, 
-            "Class": self.cls,
-            "Status": self.status,
-        })
+        for student in st.session_state.students:
+            if student.get("ID") == id:
+                student["Date"] = date
+                student["Status"] = status
 
         present = 0
         absent = 0
@@ -109,11 +113,14 @@ class OverallStatistics:
             else:
                 present.append(student)
 
-        st.write(f"🟢Total Present Students {len(present)}")
-        st.write(f"🔴Total Absent Students {len(absent)}")
+        st.markdown(f"""
+                        - 🟢Total Present Students {len(present)}
+                        - 🔴Total Absent Students {len(absent)}
+                        """)
 
-        st.write(f"📈Total Attendance Percentage: {len(present)/len(st.session_state.students)*100}%")
-
+        if len(st.session_state.students) != 0:
+            st.markdown(f"📈Total Attendance Percentage: {len(present)/len(st.session_state.students)*100}%")
+        
 class StudentStatistics:
     def total_attendance_records(self, id):
         total = 0
@@ -135,7 +142,7 @@ class StudentStatistics:
 
         st.write(f"🟢Total Present Records {len(present)}")
         st.write(f"🔴Total Absent Records {len(absent)}")
-
+    
         st.write(f"📈Total Attendance Percentage: {len(present)/(len(present) + len(absent))*100}%")
 
 class ClassStatistics:
@@ -184,6 +191,23 @@ def low_attendance_report(value):
         st.table(low_attendance_report)
     else:
         st.success("No students found below this attendance threshold")
+
+def attendance_record_preview(id):
+    students = []
+    for student in st.session_state.students:
+        if student.get("ID") == id:
+            students.append(student)
+
+    st.markdown(f"""- First Recorded Attendance: {students[0]}""")
+    st.markdown(f"""- Newest Recorded Attendance: {students[-1]}""")
+
+
+
+
+
+
+
+
 
     
         
