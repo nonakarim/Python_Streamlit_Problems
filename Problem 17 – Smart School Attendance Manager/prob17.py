@@ -202,7 +202,21 @@ def attendance_record_preview(id):
     st.markdown(f"""- Newest Recorded Attendance: {students[-1]}""")
 
 
+with st.sidebar:
+    st.header("School Information")
+    total_students = set()
 
+    for student in st.session_state.students:
+        total_students.add(student.get("Name"))
+
+    st.markdown(f"""
+                - 🏫School Name: Sadeq Al-Rafee
+                - 🗓️Today's Date: {datetime.date.today()}
+                - 👩🏻‍🎓Total Registered Students: {len(total_students)}
+                - 📋Number of attendance records: {len(st.session_state.students)}
+                """)
+    obj1 = OverallStatistics()
+    obj1.absent_present()
 
 
 
